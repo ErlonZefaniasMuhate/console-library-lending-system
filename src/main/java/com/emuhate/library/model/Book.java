@@ -1,5 +1,7 @@
 package com.emuhate.library.model;
 
+import com.emuhate.library.exception.BookNotAvailableException;
+
 public class Book implements Borrowable{
 
     private final String isbn;
@@ -17,10 +19,50 @@ public class Book implements Borrowable{
     }
 
     @Override
-    public void checkOut(Member member){}
+    public void checkout(Member member) throws BookNotAvailableException {
+        //Check if book can be borrowed
+        if(this.status != BookStatus.AVAILABLE){
+            throw new BookNotAvailableException("Book not available to borrow.");
+        }
+
+        //Borrow book
+        this.currentBorrower = member;
+        this.status = BookStatus.BORROWED;
+    }
 
     @Override
-    public void returnItem(){};
+    public void returnItem(){
+        status = BookStatus.AVAILABLE;
+        currentBorrower = null;
+    };
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public BookStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(BookStatus status) {
+        this.status = status;
+    }
+
+    public Member getCurrentBorrower() {
+        return currentBorrower;
+    }
+
+    public void setCurrentBorrower(Member currentBorrower) {
+        this.currentBorrower = currentBorrower;
+    }
 
     @Override
     public String toString() {
@@ -34,4 +76,5 @@ public class Book implements Borrowable{
         sb.append("}");
         return sb.toString();
     }
+
 }
