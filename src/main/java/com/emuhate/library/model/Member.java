@@ -3,12 +3,12 @@ package com.emuhate.library.model;
 import com.emuhate.library.exception.BookNotAvailableException;
 import com.emuhate.library.exception.MaxBooksExceededException;
 
-import static com.emuhate.library.resources.IDGenerator.generateUUID;
+import static com.emuhate.library.util.IDGenerator.generateUUID;
 
 public class Member extends Person{
 
     private final String memberID;
-    private Book[] borrowedBooks;
+    private final Book[] borrowedBooks;
     public static final int MAX_BOOKS_ALLOWED = 3;
 
     {
@@ -18,6 +18,10 @@ public class Member extends Person{
 
     public Member(String email, String name) {
         super(email, name);
+    }
+
+    public String getMemberID() {
+        return memberID;
     }
 
     @Override
@@ -43,7 +47,7 @@ public class Member extends Person{
         }
 
         if(!success){
-            throw new MaxBooksExceededException("Member cannot borrow more than 3 books.");
+            throw new MaxBooksExceededException();
         }
     }
 
@@ -65,5 +69,13 @@ public class Member extends Person{
                 .concat(book.getTitle())
             );
         }
+    }
+
+    public int getBorrowedBooksCount() {
+        int count = 0;
+        for(Book book : borrowedBooks){
+            if(book != null) count++;
+        }
+        return count;
     }
 }
