@@ -22,7 +22,7 @@ public class Book implements Borrowable{
     public void checkout(Member member) throws BookNotAvailableException {
         //Check if book can be borrowed
         if(this.status != BookStatus.AVAILABLE){
-            throw new BookNotAvailableException("Book not available to borrow.");
+            throw new BookNotAvailableException();
         }
 
         //Borrow book
