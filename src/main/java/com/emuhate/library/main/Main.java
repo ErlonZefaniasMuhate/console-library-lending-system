@@ -1,8 +1,10 @@
 package com.emuhate.library.main;
 
+import com.emuhate.library.service.LibraryService;
+
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println("Welcome to the Library Management System!");
+        LibraryService.getInstance().run();
     }
 }
